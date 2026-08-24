@@ -1,0 +1,46 @@
+<section class="page-shell dashboard-shell">
+  <div class="hero-panel compact-hero">
+    <div><span class="eyebrow">Your quiet place</span><h1>Welcome back, <%= currentUser.name.split(' ')[0] %>.</h1><p>We kept your place. Nothing here asks you to catch up.</p></div>
+    <div class="lantern-orb" aria-hidden="true"><span></span></div>
+  </div>
+
+  <div class="capacity-strip card soft-card">
+    <div><span class="eyebrow">Capacity first</span><h2>Choose only what feels manageable today.</h2><p>The Quiet Arcade stays available without prediction, pressure, or a daily score.</p></div>
+    <a class="button button-ghost" href="/rooms">Choose a quiet room</a>
+  </div>
+
+  <div class="dashboard-grid">
+    <section class="card span-2">
+      <div class="section-heading"><div><span class="eyebrow">A brief check-in</span><h2>How much do you have today?</h2></div><span class="privacy-chip">No streaks</span></div>
+      <form method="post" action="/app/check-in" class="form-stack">
+        <div class="choice-grid four">
+          <% [['little','A little'],['some','Some'],['not_much','Not much'],['unknown',"I don't know"]].forEach(([value,label])=>{ %>
+            <label class="choice-card"><input type="radio" name="capacity" value="<%= value %>" <%= currentUser.capacity===value?'checked':'' %>><span><%= label %></span></label>
+          <% }) %>
+        </div>
+        <label>Mood right now <span class="hint">1 = very low, 5 = steady</span><input type="range" name="mood" min="1" max="5" value="<%= latest?.mood || 3 %>"></label>
+        <label>Anything you want to place here? <span class="hint">Optional</span><textarea name="note" rows="3" placeholder="You do not need to make it neat."></textarea></label>
+        <button class="button" type="submit">Save this moment</button>
+      </form>
+    </section>
+
+    <aside class="card therapy-card">
+      <span class="eyebrow">Human support</span><h2><%= assignment?.therapist ? assignment.therapist.name : 'Care matching' %></h2>
+      <% if (assignment?.therapist) { %><p>Your primary therapist is connected to this care space according to your consent settings.</p><div class="stack-actions"><a href="/app/messages" class="button button-ghost">Secure message</a><a href="/app/sessions" class="text-link">Request a session →</a></div><% } else { %><p>No primary therapist is assigned yet. An administrator can use the matching engine when human support is appropriate.</p><a href="/app/settings" class="text-link">Review preferences →</a><% } %>
+    </aside>
+
+    <section class="card span-3">
+      <div class="section-heading"><div><span class="eyebrow">The Quiet Arcade</span><h2>What kind of care do you need right now?</h2></div><a href="/rooms" class="text-link">See all rooms →</a></div>
+      <div class="room-mini-grid">
+        <a class="room-mini" href="/rooms/calm"><span>01</span><strong>Calm Me</strong><small>breathing + overwhelm</small></a>
+        <a class="room-mini" href="/rooms/ground"><span>02</span><strong>Ground Me</strong><small>sensory orientation</small></a>
+        <a class="room-mini" href="/rooms/rest"><span>03</span><strong>Let Me Rest</strong><small>zero-pressure rest</small></a>
+        <a class="room-mini" href="/rooms/return"><span>04</span><strong>Help Me Return</strong><small>grief + reintegration</small></a>
+        <a class="room-mini" href="/community"><span>05</span><strong>Carry With Me</strong><small>slow community</small></a>
+      </div>
+    </section>
+
+    <% if (carePlan) { %><section class="card span-2"><span class="eyebrow">Personal Recovery Plan</span><h2>Your next gentle actions</h2><div class="care-plan-grid"><div><strong>Goals</strong><ul><% (carePlan.goals||[]).forEach(x=>{ %><li><%= x %></li><% }) %></ul></div><div><strong>Next actions</strong><ul><% (carePlan.nextActions||[]).forEach(x=>{ %><li><%= x %></li><% }) %></ul></div></div><a href="/app/recovery" class="text-link">Open Recovery & Hearthstone →</a></section><% } %>
+    <aside class="card subscription-card"><span class="eyebrow">Access</span><h2><%= subscription?.plan==='plus'?'Chiedza Plus':'Core care' %></h2><p>The system keeps essential support visible without turning care into a reward loop.</p><a href="/pricing" class="text-link">View access model →</a></aside>
+  </div>
+</section>

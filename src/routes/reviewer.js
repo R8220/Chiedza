@@ -1,0 +1,10 @@
+import express from 'express';
+import {Op} from 'sequelize';
+import {RiskFlag,User,Lantern,AuditLog} from '../models/index.js';
+import {requireAuth,requireRole} from '../middleware/auth.js';
+import {decryptText} from '../utils/crypto.js';
+const router=express.Router();router.use('/reviewer',requireAuth,requireRole('reviewer','admin'));
+router.get('/reviewer',async(req,res)=>{const flags=await RiskFlag.findAll({where:{status:{[Op.in]:['open','acknowledged','escalated']}},include:[{model:User,attributes:['id','name','email','therapeuticMode']}],order:[['createdAt','ASC']],limit:100});const lanterns=await Lantern.findAll({where:{moderationStatus:'pending'},include:[{model:User,attributes:['id','name']}],order:[['createdAt','ASC']],limit:100});res.render('reviewer/dashboard',{title:'Care Review Queue',flags,lanterns:lanterns.map(l=>({...l.toJSON(),content:decryptText(l.encryptedContent)}))});});
+router.post('/reviewer/flags/:id',async(req,res)=>{const flag=await RiskFlag.findByPk(req.params.id);if(!flag)return res.sendStatus(404);const status=['acknowledged','escalated','closed'].includes(req.body.status)?req.body.status:'acknowledged';await flag.update({status,reviewerId:req.user.id,reviewerNotes:String(req.body.reviewerNotes||'').slice(0,3000),actionTaken:String(req.body.actionTaken||'').slice(0,3000)});await AuditLog.create({actorId:req.user.id,action:'risk_flag_reviewed',targetType:'RiskFlag',targetId:flag.id,details:{status}});res.redirect('/reviewer');});
+router.post('/reviewer/lanterns/:id',async(req,res)=>{const lantern=await Lantern.findByPk(req.params.id);if(!lantern)return res.sendStatus(404);const action=req.body.action==='approve'?'approved':'rejected';await lantern.update({moderationStatus:action,publishedAt:action==='approved'?new Date():null});await AuditLog.create({actorId:req.user.id,action:`lantern_${action}`,targetType:'Lantern',targetId:lantern.id,details:{}});res.redirect('/reviewer');});
+export default router;
