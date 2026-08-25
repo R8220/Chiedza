@@ -1,0 +1,23 @@
+{
+  "expo": {
+    "name": "Chiedza",
+    "slug": "chiedza-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.chiedza.app"
+    },
+    "android": {
+      "package": "com.chiedza.app"
+    },
+    "extra": {
+      "apiUrl": "http://10.0.2.2:3000/api/mobile"
+    },
+    "plugins": [
+      "expo-asset",
+      "expo-font"
+    ]
+  }
+}

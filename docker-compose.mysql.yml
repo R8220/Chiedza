@@ -1,0 +1,15 @@
+services:
+  mysql:
+    image: mysql:8.4
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: chiedza
+      MYSQL_USER: chiedza
+      MYSQL_PASSWORD: chiedza_dev_password
+      MYSQL_ROOT_PASSWORD: root_dev_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - chiedza_mysql:/var/lib/mysql
+volumes:
+  chiedza_mysql:

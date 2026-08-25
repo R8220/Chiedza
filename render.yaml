@@ -1,0 +1,47 @@
+services:
+  - type: web
+    name: chiedza
+    runtime: node
+    # A persistent disk requires a paid instance type; the free plan has an
+    # ephemeral filesystem that would silently erase the SQLite database on
+    # every deploy and restart.
+    plan: starter
+    region: frankfurt
+    branch: main
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /healthz
+    disk:
+      name: chiedza-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      # trust proxy is set in src/app.js, so express-session correctly sees
+      # Render's TLS termination and will issue Secure cookies in production.
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: "20"
+      - key: DB_DIALECT
+        value: sqlite
+      # Must live on the mounted disk, not the ephemeral container filesystem.
+      - key: SQLITE_STORAGE
+        value: /var/data/chiedza.sqlite
+      - key: AUTO_SYNC_DB
+        value: "true"
+      - key: APP_NAME
+        value: Chiedza
+      # Generated once by Render and kept stable across deploys. Rotating
+      # DATA_ENCRYPTION_KEY later makes existing encrypted text unreadable.
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DATA_ENCRYPTION_KEY
+        generateValue: true
+      # Set in the Render dashboard if you want the real AI listener rather
+      # than the safe local fallback. Left unset is a supported configuration.
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OPENAI_MODEL
+        sync: false

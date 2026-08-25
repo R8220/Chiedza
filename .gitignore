@@ -1,0 +1,17 @@
+node_modules/
+.env
+data/
+public/uploads/*
+!public/uploads/.gitkeep
+npm-debug.log*
+.DS_Store
+
+# Local run logs from dev/tunnel sessions
+*.log
+
+# Expo / React Native build artefacts.
+# ios/ itself is kept: it carries the Podfile patch for Xcode 26's clang.
+mobile-app/.expo/
+mobile-app/ios/Pods/
+mobile-app/ios/build/
+mobile-app/ios/.xcode.env.local

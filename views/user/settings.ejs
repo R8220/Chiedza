@@ -1,0 +1,19 @@
+<section class="page-shell narrow-shell">
+  <div class="page-header"><span class="eyebrow">Layer 8</span><h1>Consent & control</h1><p>You choose how AI, therapists, transcripts, contact and sensory settings work around you.</p></div>
+  <form method="post" action="/app/settings" class="card form-stack">
+    <div class="form-grid two">
+      <label>Language<select name="language"><% supportedLanguages.forEach(l=>{ %><option value="<%= l.code %>" <%= currentUser.language===l.code?'selected':'' %>><%= l.label %></option><% }) %></select></label>
+      <label>Cultural context<input name="culture" value="<%= currentUser.culture %>" placeholder="e.g. Zimbabwean, UK diaspora"></label>
+      <label>Faith / spiritual preference<input name="faith" value="<%= currentUser.faith %>" placeholder="Optional"></label>
+      <label>Timezone<input name="timezone" value="<%= currentUser.timezone %>"></label>
+      <label>Communication<select name="communicationPreference"><% ['chat','voice + chat','scheduled sessions only'].forEach(x=>{ %><option <%= currentUser.communicationPreference===x?'selected':'' %>><%= x %></option><% }) %></select></label>
+      <label>Preferred therapist gender<input name="preferredTherapistGender" value="<%= currentUser.preferredTherapistGender %>" placeholder="Optional"></label>
+    </div>
+    <fieldset><legend>What support may fit?</legend><div class="check-grid"><% ['anxiety','burnout','grief','trauma','workplace stress','post-therapy aftercare'].forEach(n=>{ %><label><input type="checkbox" name="needs" value="<%= n %>" <%= (currentUser.needs||[]).includes(n)?'checked':'' %>><span><%= n %></span></label><% }) %></div></fieldset>
+    <fieldset><legend>Data and care controls</legend><div class="toggle-list">
+      <% [['aiOnlyMode','AI-only mode'],['therapistVisibility','Allow therapist visibility of structured care data'],['transcriptSharing','Allow full journal/transcript sharing with assigned therapist'],['recordingConsent','Allow session recording when explicitly requested'],['contactConsent','Allow care-team contact'],['lowBatteryMode','Low Battery Mode'],['reducedMotion','Reduced motion']].forEach(([name,label])=>{ %><label class="toggle-row"><span><strong><%= label %></strong></span><input type="checkbox" name="<%= name %>" <%= currentUser[name]?'checked':'' %>></label><% }) %>
+    </div></fieldset>
+    <div class="ethical-note"><strong>Safety boundary.</strong> High-risk safeguarding can still route to human review even when AI-only mode is selected. The system does not use consent settings to hide urgent safety signals.</div>
+    <button class="button" type="submit">Save my choices</button>
+  </form>
+</section>

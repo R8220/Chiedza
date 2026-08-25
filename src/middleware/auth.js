@@ -1,0 +1,4 @@
+import {User} from '../models/index.js';
+export async function attachUser(req,res,next){res.locals.currentUser=null;res.locals.path=req.path;res.locals.notice=req.session?.notice||null;if(req.session?.notice)delete req.session.notice;if(!req.session?.userId)return next();try{const user=await User.findByPk(req.session.userId);if(user&&user.isActive){user.lastSeenAt=new Date();await user.save();req.user=user;res.locals.currentUser=user;}else{req.session.destroy(()=>{});}}catch(error){console.error(error);}next();}
+export function requireAuth(req,res,next){if(!req.user){req.session.notice={type:'warning',text:'Please sign in to continue.'};return res.redirect('/login');}next();}
+export function requireRole(...roles){return(req,res,next)=>{if(!req.user)return res.redirect('/login');if(!roles.includes(req.user.role))return res.status(403).render('error',{title:'Access restricted',message:'This area is available to a different care role.'});next();};}

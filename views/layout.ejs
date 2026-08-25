@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en" class="<%= currentUser?.reducedMotion ? 'reduced-motion' : '' %> <%= currentUser?.lowBatteryMode ? 'low-battery' : '' %>">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#2B2118">
+  <title><%= title ? `${title} · Chiedza` : 'Chiedza' %></title>
+  <meta name="description" content="Chiedza - continuous emotional care intelligence for the recovery gap.">
+  <link rel="manifest" href="/manifest.webmanifest"><link rel="icon" href="/img/lantern.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+  <%- include('partials/nav') %>
+  <main class="site-main">
+    <% if (notice) { %><div class="notice notice-<%= notice.type || 'info' %>" role="status"><%= notice.text %></div><% } %>
+    <%- body %>
+  </main>
+  <footer class="site-footer"><div><strong>Chiedza</strong><span>A listener, reflector and care-routing system - not a replacement for a therapist or emergency service.</span></div><div class="footer-links"><a href="/about">Ethical perimeter</a><a href="/pricing">Access</a><a href="/offline.html">Offline grounding</a></div></footer>
+  <script src="/js/app.js" defer></script>
+</body>
+</html>
