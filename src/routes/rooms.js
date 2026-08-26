@@ -2,7 +2,7 @@ import express from 'express';
 import {requireAuth,requireRole} from '../middleware/auth.js';
 import {RoomSession,JournalEntry} from '../models/index.js';
 import {encryptText} from '../utils/crypto.js';
-const router=express.Router();router.use(requireAuth,requireRole('user'));
+const router=express.Router();router.use('/rooms',requireAuth,requireRole('user'));
 const roomMeta={calm:{title:'Calm Me',subtitle:'Lantern Breathing',state:'Panic, overwhelm, racing thoughts',aftercare:true},ground:{title:'Ground Me',subtitle:'The Quiet Room',state:'Dissociation, anxiety, feeling far away',aftercare:true},rest:{title:'Let Me Rest',subtitle:'The Long Afternoon',state:'Chronic fatigue, flare, sensory overload',aftercare:false},return:{title:'Help Me Return',subtitle:'The Memory House',state:'Grief, identity transition, post-crisis',aftercare:true},carry:{title:'Carry With Me',subtitle:'Lanterns Left Behind',state:'Loneliness, invisible illness, feeling unwitnessed',aftercare:true}};
 router.get('/rooms',(req,res)=>res.render('rooms/index',{title:'The Quiet Arcade',rooms:roomMeta}));
 router.get('/rooms/:room',(req,res)=>{const room=roomMeta[req.params.room];if(!room)return res.status(404).render('error',{title:'Room not found',message:'That quiet room does not exist.'});if(req.params.room==='carry')return res.redirect('/community');res.render(`rooms/${req.params.room}`,{title:room.title,room});});

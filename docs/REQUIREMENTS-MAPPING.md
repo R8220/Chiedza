@@ -10,7 +10,7 @@ This file maps the supplied 35-page scope to this Node.js repository. **Implemen
 | Therapist System | Implemented | caseload, AI insight review, SOAP notes, care plans, sessions, messages |
 | Matching Engine | Implemented | clinical specialty → safety/preferences → language/timezone → workload scoring |
 | Longitudinal Care Memory | Implemented baseline | check-ins, room sessions, journals, summaries, milestones, risk history |
-| Predictive Care | Prototype | Emotional Weather uses longitudinal patterns; explicitly non-diagnostic |
+| Predictive Care | Deferred to Phase 2 | Removed from MVP navigation and dashboard; retain as a later non-diagnostic feature |
 | Crisis Detection & Safeguarding | Prototype / operational dependency | risk rules, immediate low-stimulation response, human review queue, crisis directory; thresholds and contacts require clinical/operational validation |
 | User Consent & Control | Implemented | AI-only preference, therapist visibility, transcript, recording, contact, communication, low-battery, reduced motion |
 | Therapeutic Modes | Implemented | stabilisation, active, recovery, crisis modes stored per user |
@@ -46,13 +46,13 @@ This file maps the supplied 35-page scope to this Node.js repository. **Implemen
 | Hearthstone™ | Implemented | visual user-defined milestone hearth |
 | “I'm With You” Live Co-Regulation™ | Prototype | adaptive listener + minimalist distress response; always-on voice presence not enabled |
 | Voice Biofeedback & Vocal Stress Analysis™ | Not clinically enabled | deliberately omitted from inference/routing until validated biomarker model, consent flow, on-device/privacy design and clinical governance exist |
-| Emotional Weather Forecast™ | Implemented prototype | pattern-based, non-diagnostic forecast |
-| Digital Grief Archive™ | Implemented baseline | encrypted stories/letters/memory items + therapist-sharing consent |
-| AI Poetry Generator™ | Implemented | `/app/poetry` |
-| Digital Healing Sanctuary™ | Implemented prototype | `/sanctuary` cinematic 2D visual; additional scenes/audio can be added |
-| Companion Mode™ | Implemented baseline | consent-scoped caregiver dashboard |
+| Emotional Weather Forecast™ | Deferred to Phase 2 | Removed from the reviewed MVP build |
+| Digital Grief Archive™ | Deferred to Phase 2 | Removed from the reviewed MVP build |
+| AI Poetry Generator™ | Deferred to Phase 2 | Removed from the reviewed MVP build |
+| Digital Healing Sanctuary™ | Deferred to Phase 2 | Removed from the reviewed MVP build |
+| Companion Mode™ | Deferred to Phase 3 | Caregiver role and module removed from the reviewed MVP build |
 | Thematic Community Threads™ | Implemented baseline | theme/pod filters; no popularity ranking |
-| Return to Self Portal™ | Implemented | recovery dashboard, weather, hearth, summaries, reflections |
+| Return to Self Portal™ | Deferred to Phase 3 | MVP keeps the core Recovery & Hearthstone view without the full Phase 3 portal |
 | Cultural & Regional Care Pods™ | Implemented baseline | community `pod` filter/data field; trained facilitator operating model is external |
 | AR/VR Healing Sanctuary™ | Future | Phase 4 item; not represented as finished |
 | Full AI Care Ecosystem | Future / partial foundations | shared record models and role workflows are present; full partner ecosystem requires integrations |
@@ -64,7 +64,7 @@ This file maps the supplied 35-page scope to this Node.js repository. **Implemen
 
 ## Safety implementation order
 
-Every text-bearing high-risk pathway is intended to create a human-review flag before or instead of ordinary generative reflection: AI Listener, check-in, journal, community lantern and grief archive. The crisis directory ships with **non-functional placeholders** so the demo never fabricates local emergency contacts.
+Every text-bearing high-risk pathway in this MVP is intended to create a human-review flag before or instead of ordinary generative reflection: AI Listener, check-in, journal and community lantern. The crisis directory ships with **non-functional placeholders** so the demo never fabricates local emergency contacts.
 
 ## Deliberate non-claims
 

@@ -10,9 +10,7 @@
     "seed": "node src/seed.js",
     "test": "node --test tests/*.test.js"
   },
-  "engines": {
-    "node": ">=20"
-  },
+  "engines": {"node": ">=20"},
   "dependencies": {
     "bcryptjs": "^3.0.2",
     "connect-session-sequelize": "^8.0.0",
@@ -24,14 +22,12 @@
     "express-session": "^1.18.2",
     "express-validator": "^7.2.1",
     "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
     "multer": "^2.0.2",
     "mysql2": "^3.14.3",
     "openai": "^5.12.2",
     "sequelize": "^6.37.7",
-    "sqlite3": "^5.1.7",
-    "jsonwebtoken": "^9.0.2"
+    "sqlite3": "^5.1.7"
   },
-  "devDependencies": {
-    "supertest": "^7.1.4"
-  }
+  "devDependencies": {"supertest": "^7.1.4"}
 }

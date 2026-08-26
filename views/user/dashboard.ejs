@@ -5,8 +5,8 @@
   </div>
 
   <div class="capacity-strip card soft-card">
-    <div><span class="eyebrow">Emotional weather</span><h2><%= forecast.headline %></h2><p><%= forecast.detail %></p></div>
-    <a class="button button-ghost" href="/rooms/<%= forecast.recommendedRoom %>">Open a fitting room</a>
+    <div><span class="eyebrow">Capacity first</span><h2>Choose only what feels manageable today.</h2><p>The Quiet Arcade stays available without prediction, pressure, or a daily score.</p></div>
+    <a class="button button-ghost" href="/rooms">Choose a quiet room</a>
   </div>
 
   <div class="dashboard-grid">
@@ -40,7 +40,7 @@
       </div>
     </section>
 
-    <% if (carePlan) { %><section class="card span-2"><span class="eyebrow">Personal Recovery Plan</span><h2>Your next gentle actions</h2><div class="care-plan-grid"><div><strong>Goals</strong><ul><% (carePlan.goals||[]).forEach(x=>{ %><li><%= x %></li><% }) %></ul></div><div><strong>Next actions</strong><ul><% (carePlan.nextActions||[]).forEach(x=>{ %><li><%= x %></li><% }) %></ul></div></div><a href="/app/recovery" class="text-link">Open Return to Self →</a></section><% } %>
+    <% if (carePlan) { %><section class="card span-2"><span class="eyebrow">Personal Recovery Plan</span><h2>Your next gentle actions</h2><div class="care-plan-grid"><div><strong>Goals</strong><ul><% (carePlan.goals||[]).forEach(x=>{ %><li><%= x %></li><% }) %></ul></div><div><strong>Next actions</strong><ul><% (carePlan.nextActions||[]).forEach(x=>{ %><li><%= x %></li><% }) %></ul></div></div><a href="/app/recovery" class="text-link">Open Recovery & Hearthstone →</a></section><% } %>
     <aside class="card subscription-card"><span class="eyebrow">Access</span><h2><%= subscription?.plan==='plus'?'Chiedza Plus':'Core care' %></h2><p>The system keeps essential support visible without turning care into a reward loop.</p><a href="/pricing" class="text-link">View access model →</a></aside>
   </div>
 </section>

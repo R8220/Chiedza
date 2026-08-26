@@ -17,7 +17,6 @@ import JournalScreen from '../screens/JournalScreen';
 import MoreScreen from '../screens/MoreScreen';
 import RecoveryScreen from '../screens/RecoveryScreen';
 import CommunityScreen from '../screens/CommunityScreen';
-import GriefScreen from '../screens/GriefScreen';
 import SessionsScreen from '../screens/SessionsScreen';
 import MessagesScreen from '../screens/MessagesScreen';
 import SettingsScreen from '../screens/SettingsScreen';
@@ -27,7 +26,8 @@ const Stack=createNativeStackNavigator(),Tabs=createBottomTabNavigator();
 const tabIcons={Home:'home',Listener:'message-circle',Rooms:'moon',Journal:'book-open',More:'more-horizontal'};
 // Home wears the brand masthead; the rest carry their own name.
 const tabHeaders={Listener:['The Listener','Say as much or as little as you have'],Rooms:['The Quiet Arcade','Rooms to enter and softly return from'],Journal:['Journal','Night pages, release and reflection'],More:['More care spaces','Open only what you have capacity for']};
-const stackHeaders={Recovery:'Return to Self',Community:'Carry With Me',Grief:'Grief Archive',Sessions:'Sessions',Messages:'Secure Messages',Settings:'Consent & Control'};
+// Grief Archive and Companion Mode are Phase 2/3 and are not part of this build.
+const stackHeaders={Recovery:'Return to Self',Community:'Carry With Me',Sessions:'Sessions',Messages:'Secure Messages',Settings:'Consent & Control'};
 
 function MainTabs(){
   const {user}=useAuth();
@@ -68,7 +68,7 @@ export default function AppNavigator(){
           <>
             <Stack.Screen name="Main" component={MainTabs} options={{headerShown:false}}/>
             {Object.entries(stackHeaders).map(([name,label])=>(
-              <Stack.Screen key={name} name={name} component={{Recovery:RecoveryScreen,Community:CommunityScreen,Grief:GriefScreen,Sessions:SessionsScreen,Messages:MessagesScreen,Settings:SettingsScreen}[name]}
+              <Stack.Screen key={name} name={name} component={{Recovery:RecoveryScreen,Community:CommunityScreen,Sessions:SessionsScreen,Messages:MessagesScreen,Settings:SettingsScreen}[name]}
                 options={({navigation})=>({header:()=><TopBar title={label} onBack={()=>navigation.goBack()} right={null}/>})}/>
             ))}
           </>

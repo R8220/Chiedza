@@ -6,7 +6,7 @@ A modern, responsive Node.js implementation of **Chiedza Application: Complete P
 
 - **Node.js / Express 5** server with EJS responsive UI
 - **SQLite for immediate local use** and **MySQL configuration for hosting** via Sequelize
-- User, therapist, care-reviewer, caregiver and administrator roles
+- User, therapist, care-reviewer and administrator roles
 - AI Emotional Listener with optional OpenAI integration and safe local fallback
 - Care Orchestrator, emotion/risk heuristics, structured AI care summaries and clinician corrections
 - Five-room Quiet Arcade: Calm Me, Ground Me, Let Me Rest, Help Me Return, Carry With Me
@@ -14,16 +14,10 @@ A modern, responsive Node.js implementation of **Chiedza Application: Complete P
 - Therapist Corner: caseload, summaries, risk indicators, SOAP notes, care plans, sessions and secure in-app text
 - Human safeguarding queue and moderated slow-community lanterns
 - Matching Engine with clinical specialty, preference, language/timezone and workload weighting
-- Return to Self recovery portal, Hearthstone milestones and Emotional Weather reflection
-- Digital Grief Archive, AI Poetry Studio, Companion Mode and 2D Healing Sanctuary prototype
+- Recovery & Hearthstone milestones
 - PWA shell and offline grounding page
 - Audit trail, user/role operations and crisis-contact directory
 - Brand palette and typography from the specification
-
-
-## Native mobile app added
-
-This enhanced edition now includes an **Expo / React Native** client in `mobile-app/` plus a token-authenticated REST API under `/api/mobile`. The Node.js backend remains the source of truth for safety, AI routing, data and therapist workflows. See `docs/MOBILE-CONVERSION.md` and `mobile-app/README.md`.
 
 ## Important safety / production boundary
 
@@ -85,7 +79,6 @@ Demo accounts — password for all: **Demo123!**
 | Therapist | `therapist@chiedza.local` |
 | Care reviewer | `reviewer@chiedza.local` |
 | Administrator | `admin@chiedza.local` |
-| Caregiver | `caregiver@chiedza.local` |
 
 ### 5. Start the system
 
@@ -137,13 +130,9 @@ A sample `docker-compose.mysql.yml` is included if you prefer a local MySQL cont
 - `/mindfulness` — mindfulness + journals
 - `/community` — Lanterns Left Behind
 - `/app/recovery` — Return to Self + Hearthstone
-- `/app/grief` — grief archive
-- `/app/poetry` — AI poetry
-- `/app/companion` — caregiver permissions
 - `/app/sessions` — session requests
 - `/app/messages` — therapist messages
 - `/app/settings` — consent and control
-- `/sanctuary` — 2D Digital Healing Sanctuary prototype
 
 ### Therapist
 - `/therapist`
@@ -189,3 +178,7 @@ npm test
 ## Hosting notes
 
 For a real deployment, use HTTPS, a managed MySQL/PostgreSQL service, strong secrets, reverse proxy/load balancer, secure backups, monitoring, centralized audit logs, retention/deletion policies, DPA/vendor review and a properly designed key-management solution. Do not use demo accounts or seeded crisis placeholders in production.
+
+## Scope clean-up in this MVP review
+
+The uploaded full-scope document places Digital Grief Archive, AI Poetry, Digital Healing Sanctuary and Emotional Weather in Phase 2, and Companion Mode/caregiver access in Phase 3. Those routes and the caregiver role were removed from this MVP build so the current product stays focused on the core user, therapist, human care-reviewer and administrator workflows. The reviewer role remains because human review is a non-negotiable safeguarding requirement.

@@ -1,8 +1,0 @@
-export function buildEmotionalForecast(checkIns=[]){
-  if(!checkIns.length)return {headline:'Clear enough to begin',detail:'There is not enough history for a pattern yet. Your first few check-ins will help the system notice gentle trends.',recommendedRoom:'calm',confidence:'low'};
-  const recent=checkIns.slice(0,14); const moods=recent.map(c=>Number(c.mood||3)); const avg=moods.reduce((a,b)=>a+b,0)/moods.length; const lowCapacity=recent.filter(c=>c.capacity==='not_much'||c.capacity==='little').length; const notes=recent.map(c=>(c.note||'').toLowerCase()).join(' ');
-  if(avg<=2||lowCapacity>=Math.ceil(recent.length/2))return {headline:'Overcast with a need for softness',detail:'Recent check-ins show lower energy or mood. This is a pattern reflection, not a diagnosis or prediction. A lower-stimulation room may fit today.',recommendedRoom:'rest',confidence:recent.length>=7?'medium':'low'};
-  if(/(anx|panic|overwhelm|racing)/i.test(notes))return {headline:'A little unsettled',detail:'Anxiety or overwhelm has appeared in recent notes. A short grounding or breathing room is ready if it feels useful.',recommendedRoom:'ground',confidence:recent.length>=7?'medium':'low'};
-  if(/(grief|loss|miss|funeral)/i.test(notes))return {headline:'A reflective season',detail:'Grief-related themes have appeared recently. The Memory House is available without asking you to rush the process.',recommendedRoom:'return',confidence:recent.length>=7?'medium':'low'};
-  return {headline:'Mostly steady',detail:'Your recent pattern looks relatively steady. The system will keep adapting without asking you to maintain a streak.',recommendedRoom:'calm',confidence:recent.length>=7?'medium':'low'};
-}
