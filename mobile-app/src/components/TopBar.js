@@ -3,7 +3,7 @@ import {View,Text,Pressable,StyleSheet} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {Feather} from '@expo/vector-icons';
 import {colors,spacing,type,fonts} from '../theme';
-import LanternMark from './LanternMark';
+import SunMark from './SunMark';
 
 const initialsOf=name=>String(name||'').trim().split(/\s+/).slice(0,2).map(w=>w[0]||'').join('').toUpperCase()||'·';
 
@@ -25,7 +25,7 @@ export default function TopBar({title,eyebrow,onBack,user,onPressProfile,right})
             </View>
           ):(
             <View style={s.brand}>
-              <LanternMark size={24}/>
+              <SunMark size={24}/>
               <Text style={s.wordmark}>Chiedza</Text>
             </View>
           )}
