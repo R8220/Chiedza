@@ -16,7 +16,9 @@ const pickUser=u=>({id:u.id,name:u.name,email:u.email,role:u.role,language:u.lan
 
 router.post('/auth/register',async(req,res)=>{
   const name=String(req.body.name||'').trim().slice(0,120), email=String(req.body.email||'').trim().toLowerCase(), password=String(req.body.password||'');
-  if(!name||!email||password.length<8)return res.status(400).json({error:'Name, valid email and a password of at least 8 characters are required.'});
+  // The web route validates with express-validator's isEmail(); the mobile route only
+  // checked for a non-empty string, so it accepted addresses this message calls invalid.
+  if(!name||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)||password.length<8)return res.status(400).json({error:'Name, valid email and a password of at least 8 characters are required.'});
   if(await User.findOne({where:{email}}))return res.status(409).json({error:'An account with that email already exists.'});
   const user=await User.create({name,email,passwordHash:await bcrypt.hash(password,12),role:'user'});
   res.status(201).json({token:signMobileToken(user),user:pickUser(user)});

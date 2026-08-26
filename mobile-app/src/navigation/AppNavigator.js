@@ -8,7 +8,8 @@ import {Feather} from '@expo/vector-icons';
 import {useAuth} from '../context/AuthContext';
 import {colors,fonts} from '../theme';
 import TopBar from '../components/TopBar';
-import AuthScreen from '../screens/AuthScreen';
+import SignInScreen from '../screens/SignInScreen';
+import SignUpScreen from '../screens/SignUpScreen';
 import OnboardingScreen from '../screens/OnboardingScreen';
 import HomeScreen from '../screens/HomeScreen';
 import ListenerScreen from '../screens/ListenerScreen';
@@ -61,9 +62,14 @@ export default function AppNavigator(){
     <NavigationContainer>
       <Stack.Navigator screenOptions={{contentStyle:{backgroundColor:colors.cream}}}>
         {!user?(
-          <Stack.Screen name="Auth" component={AuthScreen} options={{headerShown:false}}/>
+          <>
+            {/* Signed out: the masthead stands in for a nav bar, since there is nowhere else to go. */}
+            <Stack.Screen name="SignIn" component={SignInScreen} options={{header:()=><TopBar/>}}/>
+            <Stack.Screen name="SignUp" component={SignUpScreen}
+              options={({navigation})=>({header:()=><TopBar title="Create your place" onBack={()=>navigation.goBack()} right={null}/>})}/>
+          </>
         ):!user.onboardingComplete?(
-          <Stack.Screen name="Onboarding" component={OnboardingScreen} options={{headerShown:false}}/>
+          <Stack.Screen name="Onboarding" component={OnboardingScreen} options={{header:()=><TopBar/>}}/>
         ):(
           <>
             <Stack.Screen name="Main" component={MainTabs} options={{headerShown:false}}/>

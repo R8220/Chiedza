@@ -1,13 +1,27 @@
 import React from 'react';
-import {View,Text,TextInput,Pressable,StyleSheet,ScrollView,ActivityIndicator} from 'react-native';
+import {View,Text,TextInput,Pressable,StyleSheet,ScrollView,ActivityIndicator,KeyboardAvoidingView,Platform} from 'react-native';
 import {Feather} from '@expo/vector-icons';
 import {colors,spacing,radius,type,fonts,shadow} from '../theme';
 
-export function Screen({children,scroll=true,contentStyle}){
+export function Screen({children,scroll=true,contentStyle,avoidKeyboard=false}){
   const body=<View style={[s.body,contentStyle]}>{children}</View>;
-  return scroll
+  const inner=scroll
     ?<ScrollView style={s.screen} contentContainerStyle={{flexGrow:1,paddingBottom:spacing.xxl}} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>{body}</ScrollView>
     :<View style={s.screen}>{body}</View>;
+  // Forms need the keyboard pushed off the submit button; the rest of the app does not.
+  return avoidKeyboard
+    ?<KeyboardAvoidingView style={{flex:1}} behavior={Platform.OS==='ios'?'padding':undefined}>{inner}</KeyboardAvoidingView>
+    :inner;
+}
+
+export function Field({label,hint,children}){
+  return (
+    <View style={{gap:6}}>
+      <Text style={type.label}>{label}</Text>
+      {children}
+      {hint?<Text style={[type.meta,{fontSize:12}]}>{hint}</Text>:null}
+    </View>
+  );
 }
 
 export const Title=({children,style})=><Text style={[type.title,style]}>{children}</Text>;

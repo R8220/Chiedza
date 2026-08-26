@@ -1,8 +1,0 @@
-import React,{useState} from 'react';
-import {Text,Pressable} from 'react-native';
-import {Screen,Title,Subtitle,Input,Button,Notice,Label,Card} from '../components/UI';
-import {useAuth} from '../context/AuthContext';
-import {colors} from '../theme';
-export default function AuthScreen(){const[mode,setMode]=useState('login'),[name,setName]=useState(''),[email,setEmail]=useState(''),[password,setPassword]=useState(''),[error,setError]=useState(''),[busy,setBusy]=useState(false);const auth=useAuth();
-async function submit(){setBusy(true);setError('');try{mode==='login'?await auth.login(email,password):await auth.register(name,email,password);}catch(e){setError(e.message)}finally{setBusy(false)}}
-return <Screen><Title>Chiedza</Title><Subtitle>Continuous emotional care, designed to support recovery without pressure.</Subtitle><Card><Label>{mode==='login'?'Welcome back':'Create your place'}</Label>{mode==='register'&&<Input placeholder="Your name" value={name} onChangeText={setName}/>}<Input autoCapitalize="none" keyboardType="email-address" placeholder="Email" value={email} onChangeText={setEmail}/><Input secureTextEntry placeholder="Password" value={password} onChangeText={setPassword}/>{error?<Notice danger>{error}</Notice>:null}<Button title={busy?'Please wait…':mode==='login'?'Sign in':'Create account'} onPress={submit} disabled={busy}/><Pressable onPress={()=>{setError('');setMode(mode==='login'?'register':'login')}}><Text style={{color:colors.sepia,textAlign:'center'}}>{mode==='login'?'New here? Create an account':'Already have an account? Sign in'}</Text></Pressable></Card><Notice>Chiedza is not an emergency service and does not replace a licensed clinician. High-risk content is designed to enter a human review pathway.</Notice></Screen>}
