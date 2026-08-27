@@ -5,6 +5,10 @@ import {Platform} from 'react-native';
 export const colors={
   cream:'#F5EFE4',creamDeep:'#EFE7D9',creamLift:'#FBF6EC',
   sepia:'#8B6F47',sepiaSoft:'#A08A67',
+  // Spec §9.2 commits to WCAG 2.2 AA. Brand Sepia is 4.11:1 on Cream and Muted is
+  // 4.23:1 — both short of 4.5:1 for small text. These darkened variants are used
+  // only for text below large size; the brand values stay for everything else.
+  sepiaText:'#7D633F',mutedText:'#6D645B',
   gold:'#C9954A',goldSoft:'#E2C08A',goldWash:'#F3E6CE',
   ink:'#2B2118',inkSoft:'#4A3D30',
   rose:'#C99A95',roseWash:'#F1E0DD',
@@ -39,10 +43,10 @@ export const type={
   title:{fontFamily:fonts.display,fontSize:34,lineHeight:41,color:colors.ink},
   heading:{fontFamily:fonts.serif,fontSize:23,lineHeight:30,color:colors.ink},
   body:{fontFamily:fonts.sans,fontSize:15,lineHeight:25,color:colors.inkSoft},
-  subtle:{fontFamily:fonts.sans,fontSize:14.5,lineHeight:24,color:colors.muted},
+  subtle:{fontFamily:fonts.sans,fontSize:14.5,lineHeight:24,color:colors.mutedText},
   // Wide-tracked micro caps, as the brand site sets its eyebrows.
-  label:{fontFamily:fonts.sansMedium,fontSize:10.5,color:colors.sepia,textTransform:'uppercase',letterSpacing:2.2},
-  meta:{fontFamily:fonts.sans,fontSize:12.5,lineHeight:19,color:colors.muted},
+  label:{fontFamily:fonts.sansMedium,fontSize:10.5,color:colors.sepiaText,textTransform:'uppercase',letterSpacing:2.2},
+  meta:{fontFamily:fonts.sans,fontSize:12.5,lineHeight:19,color:colors.mutedText},
 };
 
 // Restrained to near-nothing: the layout is held by hairlines and space, not by

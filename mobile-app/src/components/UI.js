@@ -124,7 +124,7 @@ const s=StyleSheet.create({
   // Solid gold with wide-tracked caps, as the brand site sets its primary action.
   button:{backgroundColor:colors.gold,borderRadius:radius.sm,paddingVertical:17,paddingHorizontal:22,alignItems:'center'},
   buttonSecondary:{backgroundColor:'transparent',borderWidth:1,borderColor:colors.sepiaSoft},
-  buttonText:{color:colors.white,fontSize:12,fontFamily:fonts.sansSemiBold,letterSpacing:1.8,textTransform:'uppercase'},
+  buttonText:{color:colors.ink,fontSize:12,fontFamily:fonts.sansSemiBold,letterSpacing:1.8,textTransform:'uppercase'},
 
   notice:{flexDirection:'row',gap:spacing.md,padding:spacing.md,borderRadius:radius.md,borderWidth:1,alignItems:'flex-start'},
   noticeAccent:{width:3,alignSelf:'stretch',borderRadius:2},
