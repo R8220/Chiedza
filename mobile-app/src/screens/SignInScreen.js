@@ -22,7 +22,6 @@ export default function SignInScreen({navigation}){
   return (
     <Screen avoidKeyboard>
       <View style={s.hero}>
-        <View style={s.halo} pointerEvents="none"/>
         <Text style={type.label}>Welcome back</Text>
         <Text style={s.heroTitle}>Come in.</Text>
         <View style={s.rule}/>
@@ -56,9 +55,8 @@ export default function SignInScreen({navigation}){
 
 const s=StyleSheet.create({
   hero:{paddingTop:spacing.md,gap:spacing.xs,overflow:'hidden'},
-  halo:{position:'absolute',top:-100,right:-80,width:220,height:220,borderRadius:110,backgroundColor:colors.goldWash,opacity:.5},
-  heroTitle:{fontFamily:fonts.display,fontSize:42,lineHeight:48,color:colors.ink,marginTop:spacing.xs},
+  heroTitle:{fontFamily:fonts.display,fontSize:48,lineHeight:54,color:colors.ink,marginTop:spacing.xs},
   rule:{width:52,height:1,backgroundColor:colors.gold,marginVertical:spacing.md,opacity:.7},
   switch:{flexDirection:'row',alignItems:'center',justifyContent:'center',gap:8,paddingVertical:spacing.sm},
-  switchText:{fontFamily:fonts.serif,fontSize:16,color:colors.sepia},
+  switchText:{fontFamily:fonts.serif,fontSize:17,color:colors.sepia},
 });

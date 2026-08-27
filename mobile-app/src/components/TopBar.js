@@ -50,9 +50,9 @@ const s=StyleSheet.create({
   back:{width:30,height:30,alignItems:'center',justifyContent:'center',marginLeft:-6},
   brand:{flexDirection:'row',alignItems:'center',gap:spacing.sm},
   // Wide tracking on the wordmark is what makes a masthead feel considered.
-  wordmark:{fontFamily:fonts.display,fontSize:23,color:colors.ink,letterSpacing:2.6},
-  title:{fontFamily:fonts.display,fontSize:23,color:colors.ink,letterSpacing:.3},
+  wordmark:{fontFamily:fonts.display,fontSize:27,color:colors.ink,letterSpacing:2.2},
+  title:{fontFamily:fonts.display,fontSize:26,color:colors.ink,letterSpacing:.2},
   eyebrow:{...type.label,fontSize:10,letterSpacing:1.4,marginBottom:2},
   avatar:{width:38,height:38,borderRadius:19,backgroundColor:colors.creamLift,borderWidth:1,borderColor:colors.goldSoft,alignItems:'center',justifyContent:'center'},
-  avatarText:{fontFamily:fonts.serif,fontSize:14,color:colors.sepia,letterSpacing:.8},
+  avatarText:{fontFamily:fonts.serif,fontSize:15,color:colors.sepia,letterSpacing:.8},
 });

@@ -87,5 +87,5 @@ export default function AppNavigator(){
 const s=StyleSheet.create({
   splash:{flex:1,alignItems:'center',justifyContent:'center',backgroundColor:colors.cream},
   tabBar:{backgroundColor:colors.white,borderTopWidth:StyleSheet.hairlineWidth,borderTopColor:colors.line,paddingTop:6},
-  tabLabel:{fontFamily:fonts.sans,fontSize:10.5,fontWeight:'600',letterSpacing:.5,marginTop:2},
+  tabLabel:{fontFamily:fonts.sansMedium,fontSize:10,letterSpacing:.6,marginTop:3},
 });

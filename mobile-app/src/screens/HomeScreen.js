@@ -45,7 +45,6 @@ export default function HomeScreen({navigation}){
     <Screen>
       {/* Gentle Return Layer: arrival without any missed-day guilt. */}
       <View style={s.hero}>
-        <View style={s.heroHalo} pointerEvents="none"/>
         <Text style={type.label}>{now.toLocaleDateString(undefined,{weekday:'long'})} {partOfDay(now)}</Text>
         <Text style={s.heroTitle}>Welcome back{firstName?',':''}</Text>
         {firstName?<Text style={s.heroName}>{firstName}.</Text>:null}
@@ -142,9 +141,8 @@ export default function HomeScreen({navigation}){
 const s=StyleSheet.create({
   hero:{paddingTop:spacing.sm,paddingBottom:spacing.xs,gap:spacing.xs,overflow:'hidden'},
   // A single warm bloom behind the masthead, echoing the lantern.
-  heroHalo:{position:'absolute',top:-90,right:-70,width:210,height:210,borderRadius:105,backgroundColor:colors.goldWash,opacity:.5},
-  heroTitle:{fontFamily:fonts.display,fontSize:40,lineHeight:46,color:colors.ink,marginTop:spacing.xs},
-  heroName:{fontFamily:fonts.display,fontSize:40,lineHeight:46,color:colors.sepia,fontStyle:'italic'},
+  heroTitle:{fontFamily:fonts.display,fontSize:46,lineHeight:52,color:colors.ink,marginTop:spacing.xs},
+  heroName:{fontFamily:fonts.displayItalic,fontSize:46,lineHeight:52,color:colors.sepia},
   heroRule:{width:52,height:1,backgroundColor:colors.gold,marginVertical:spacing.md,opacity:.7},
 
   cardHead:{flexDirection:'row',alignItems:'center',justifyContent:'space-between',gap:spacing.sm},

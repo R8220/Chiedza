@@ -113,7 +113,7 @@ const s=StyleSheet.create({
 
   pill:{flexDirection:'row',alignItems:'center',gap:6,paddingHorizontal:11,paddingVertical:6,borderRadius:radius.pill,alignSelf:'flex-start'},
   pillDot:{width:6,height:6,borderRadius:3},
-  pillText:{fontFamily:fonts.sans,fontSize:12,fontWeight:'600',letterSpacing:.5},
+  pillText:{fontFamily:fonts.sansMedium,fontSize:11.5,letterSpacing:.6},
 
   choice:{flexDirection:'row',alignItems:'center',gap:spacing.md,backgroundColor:colors.white,borderRadius:radius.md,borderWidth:1,borderColor:colors.line,paddingVertical:16,paddingHorizontal:16,...shadow.card},
   choiceIcon:{width:40,height:40,borderRadius:20,alignItems:'center',justifyContent:'center'},
@@ -121,9 +121,10 @@ const s=StyleSheet.create({
 
   input:{backgroundColor:colors.white,borderWidth:1,borderColor:colors.line,borderRadius:radius.sm,padding:15,fontSize:16,fontFamily:fonts.sans,color:colors.ink},
 
-  button:{backgroundColor:colors.ink,borderRadius:radius.sm,paddingVertical:16,paddingHorizontal:20,alignItems:'center'},
-  buttonSecondary:{backgroundColor:'transparent',borderWidth:1,borderColor:colors.line},
-  buttonText:{color:colors.white,fontSize:15,fontFamily:fonts.sans,fontWeight:'600',letterSpacing:.3},
+  // Solid gold with wide-tracked caps, as the brand site sets its primary action.
+  button:{backgroundColor:colors.gold,borderRadius:radius.sm,paddingVertical:17,paddingHorizontal:22,alignItems:'center'},
+  buttonSecondary:{backgroundColor:'transparent',borderWidth:1,borderColor:colors.sepiaSoft},
+  buttonText:{color:colors.white,fontSize:12,fontFamily:fonts.sansSemiBold,letterSpacing:1.8,textTransform:'uppercase'},
 
   notice:{flexDirection:'row',gap:spacing.md,padding:spacing.md,borderRadius:radius.md,borderWidth:1,alignItems:'flex-start'},
   noticeAccent:{width:3,alignSelf:'stretch',borderRadius:2},
