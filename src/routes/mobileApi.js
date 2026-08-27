@@ -12,6 +12,22 @@ import {getListenerReply,generateCareSummary,generatePoem} from '../services/aiS
 import {encryptText,decryptText} from '../utils/crypto.js';
 
 const router=express.Router();
+
+// Spec 8.3, the AI Reflective Mirror: "after journaling, AI summarises emotional
+// patterns gently". It reflects only what the risk service actually detected in the
+// user's own words — no interpretation is invented, and it never reads as a
+// diagnosis, which spec 3, Stage 1 rules out ("avoid diagnostic claims").
+function reflectGently(analysis){
+  const themes=(analysis?.themes||[]).filter(Boolean);
+  const emotion=analysis?.emotion&&analysis.emotion!=='calm'?analysis.emotion:null;
+  const parts=[];
+  if(emotion)parts.push(`What you wrote reads as ${emotion}.`);
+  if(themes.length)parts.push(`${themes.length>1?'Themes that surfaced':'A theme that surfaced'}: ${themes.join(', ')}.`);
+  if(!parts.length)parts.push('Nothing here needed flagging — this is simply kept for you.');
+  parts.push('Noticing it is enough for now. Nothing is asking you to resolve it.');
+  return parts.join(' ');
+}
+
 const pickUser=u=>({id:u.id,name:u.name,email:u.email,role:u.role,language:u.language,culture:u.culture,faith:u.faith,timezone:u.timezone,communicationPreference:u.communicationPreference,therapeuticMode:u.therapeuticMode,capacity:u.capacity,aiOnlyMode:u.aiOnlyMode,therapistVisibility:u.therapistVisibility,transcriptSharing:u.transcriptSharing,recordingConsent:u.recordingConsent,contactConsent:u.contactConsent,lowBatteryMode:u.lowBatteryMode,reducedMotion:u.reducedMotion,onboardingComplete:u.onboardingComplete});
 
 router.post('/auth/register',async(req,res)=>{
@@ -108,7 +124,7 @@ router.get('/rooms',async(req,res)=>{const sessions=await RoomSession.findAll({w
 router.post('/rooms/:room/complete',async(req,res)=>{const room=req.params.room;if(!['calm','ground','rest','return','carry'].includes(room))return res.status(404).json({error:'Unknown room.'});const row=await RoomSession.create({userId:req.mobileUser.id,room,stateBefore:String(req.body.stateBefore||''),stateAfter:String(req.body.stateAfter||''),aftercareCompleted:room==='rest'?true:Boolean(req.body.aftercareCompleted),details:req.body.details||{}});res.status(201).json({session:row});});
 
 router.get('/journals',async(req,res)=>{const rows=await JournalEntry.findAll({where:{userId:req.mobileUser.id},order:[['createdAt','DESC']],limit:50});res.json({entries:rows.map(j=>({...j.toJSON(),content:decryptText(j.encryptedContent)}))});});
-router.post('/journals',async(req,res)=>{const content=String(req.body.content||'').trim().slice(0,8000);if(!content)return res.status(400).json({error:'Journal entry cannot be empty.'});const analysis=analyseText(content);const row=await JournalEntry.create({userId:req.mobileUser.id,type:['night','release','reflection'].includes(req.body.type)?req.body.type:'reflection',encryptedContent:encryptText(content),mood:Math.max(1,Math.min(5,Number(req.body.mood||3))),themes:analysis.themes,aiReflection:'A gentle reflection will become richer as your longitudinal care memory grows.'});if(['high','crisis'].includes(analysis.riskLevel))await RiskFlag.create({userId:req.mobileUser.id,source:'journal',excerpt:content.slice(0,500),riskLevel:analysis.riskLevel,status:'open'});res.status(201).json({entry:{...row.toJSON(),content}});});
+router.post('/journals',async(req,res)=>{const content=String(req.body.content||'').trim().slice(0,8000);if(!content)return res.status(400).json({error:'Journal entry cannot be empty.'});const analysis=analyseText(content);const row=await JournalEntry.create({userId:req.mobileUser.id,type:['night','release','reflection'].includes(req.body.type)?req.body.type:'reflection',encryptedContent:encryptText(content),mood:Math.max(1,Math.min(5,Number(req.body.mood||3))),themes:analysis.themes,aiReflection:reflectGently(analysis)});if(['high','crisis'].includes(analysis.riskLevel))await RiskFlag.create({userId:req.mobileUser.id,source:'journal',excerpt:content.slice(0,500),riskLevel:analysis.riskLevel,status:'open'});res.status(201).json({entry:{...row.toJSON(),content}});});
 
 router.get('/community',async(req,res)=>{const rows=await Lantern.findAll({where:{moderationStatus:'approved'},order:[['publishedAt','DESC']],limit:50});res.json({lanterns:rows.map(l=>({id:l.id,theme:l.theme,pod:l.pod,content:decryptText(l.encryptedContent),publishedAt:l.publishedAt}))});});
 router.post('/community',async(req,res)=>{const content=String(req.body.content||'').trim().slice(0,1200);if(!content)return res.status(400).json({error:'Write something before leaving a lantern.'});const analysis=analyseText(content);const row=await Lantern.create({userId:req.mobileUser.id,encryptedContent:encryptText(content),theme:String(req.body.theme||'general').slice(0,80),pod:String(req.body.pod||'global').slice(0,80),moderationStatus:'pending',safetyFlag:['high','crisis'].includes(analysis.riskLevel)});if(row.safetyFlag)await RiskFlag.create({userId:req.mobileUser.id,source:'community',excerpt:content.slice(0,500),riskLevel:analysis.riskLevel,status:'open'});res.status(201).json({message:'Your lantern is waiting for human review before it becomes visible.',lanternId:row.id});});

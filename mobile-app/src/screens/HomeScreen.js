@@ -52,6 +52,10 @@ export default function HomeScreen({navigation}){
         <Subtitle style={{fontSize:16}}>We kept your place. Nothing was lost while you were away.</Subtitle>
       </View>
 
+      {data.offline?(
+        <Notice>You are offline, so this is your last saved state. Grounding, breathing and rest still work — they need no connection.</Notice>
+      ):null}
+
       <Card>
         <View style={s.cardHead}>
           <Label>Where you are today</Label>
