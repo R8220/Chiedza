@@ -5,19 +5,33 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
+    "icon": "./assets/icon.png",
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.chiedza.app"
     },
     "android": {
-      "package": "com.chiedza.app"
+      "package": "com.chiedza.app",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#1F1714"
+      }
     },
     "extra": {
       "apiUrl": "http://10.0.2.2:3000/api/mobile"
     },
     "plugins": [
       "expo-asset",
-      "expo-font"
+      "expo-font",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash.png",
+          "backgroundColor": "#1F1714",
+          "resizeMode": "contain",
+          "imageWidth": 260
+        }
+      ]
     ]
   }
 }
