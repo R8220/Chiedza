@@ -24,29 +24,31 @@ export const spacing={xs:6,sm:10,md:16,lg:24,xl:32,xxl:44};
 // templates; the brand site sets its buttons and panels almost flat.
 export const radius={sm:4,md:8,lg:14,xl:20,pill:999};
 
-// The brand faces, taken from chiedzaco.com: Cormorant Garamond for display,
-// Poppins for UI. Bundled in assets/fonts and loaded by expo-font in App.js.
+// Spec 9.1: display and mark are Cormorant Garamond, body is Lora. Both are
+// serifs, so there is no "sans" here; chiedzaco.com's Poppins is the founder's
+// author site, not the app. Bundled in assets/fonts, loaded by expo-font.
 export const fonts={
   display:'CormorantGaramond-SemiBold',
   displayRegular:'CormorantGaramond',
   displayItalic:'CormorantGaramond-Italic',
   serif:'CormorantGaramond-Medium',
-  sans:'Poppins',
-  sansMedium:'Poppins-Medium',
-  sansSemiBold:'Poppins-SemiBold',
+  body:'Lora',
+  bodyMedium:'Lora-Medium',
+  bodySemiBold:'Lora-SemiBold',
+  bodyItalic:'Lora-RegularItalic',
 };
 
 // Cormorant has a small x-height and fine strokes, so display sizes run larger
-// and body text stays on Poppins rather than being set in the display face.
+// and body text is set in Lora rather than in the display face.
 export const type={
   hero:{fontFamily:fonts.display,fontSize:46,lineHeight:52,color:colors.ink},
   title:{fontFamily:fonts.display,fontSize:34,lineHeight:41,color:colors.ink},
   heading:{fontFamily:fonts.serif,fontSize:23,lineHeight:30,color:colors.ink},
-  body:{fontFamily:fonts.sans,fontSize:15,lineHeight:25,color:colors.inkSoft},
-  subtle:{fontFamily:fonts.sans,fontSize:14.5,lineHeight:24,color:colors.mutedText},
+  body:{fontFamily:fonts.body,fontSize:15,lineHeight:25,color:colors.inkSoft},
+  subtle:{fontFamily:fonts.body,fontSize:14.5,lineHeight:24,color:colors.mutedText},
   // Wide-tracked micro caps, as the brand site sets its eyebrows.
-  label:{fontFamily:fonts.sansMedium,fontSize:10.5,color:colors.sepiaText,textTransform:'uppercase',letterSpacing:2.2},
-  meta:{fontFamily:fonts.sans,fontSize:12.5,lineHeight:19,color:colors.mutedText},
+  label:{fontFamily:fonts.bodyMedium,fontSize:10.5,color:colors.sepiaText,textTransform:'uppercase',letterSpacing:2.2},
+  meta:{fontFamily:fonts.body,fontSize:12.5,lineHeight:19,color:colors.mutedText},
 };
 
 // Restrained to near-nothing: the layout is held by hairlines and space, not by

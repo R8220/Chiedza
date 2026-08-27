@@ -8,7 +8,7 @@ import {AuthProvider} from './src/context/AuthContext';
 import AppNavigator from './src/navigation/AppNavigator';
 import {colors} from './src/theme';
 
-// The brand faces from chiedzaco.com: Cormorant Garamond for display, Poppins for UI.
+// Spec 9.1: Cormorant Garamond for display and mark, Lora for body.
 SplashScreen.preventAutoHideAsync().catch(()=>{});
 
 export default function App(){
@@ -17,9 +17,10 @@ export default function App(){
     'CormorantGaramond-Medium':require('./assets/fonts/CormorantGaramond-Medium.ttf'),
     'CormorantGaramond-SemiBold':require('./assets/fonts/CormorantGaramond-SemiBold.ttf'),
     'CormorantGaramond-Italic':require('./assets/fonts/CormorantGaramond-RegularItalic.ttf'),
-    'Poppins':require('./assets/fonts/Poppins-Regular.ttf'),
-    'Poppins-Medium':require('./assets/fonts/Poppins-Medium.ttf'),
-    'Poppins-SemiBold':require('./assets/fonts/Poppins-SemiBold.ttf'),
+    'Lora':require('./assets/fonts/Lora-Regular.ttf'),
+    'Lora-Medium':require('./assets/fonts/Lora-Medium.ttf'),
+    'Lora-SemiBold':require('./assets/fonts/Lora-SemiBold.ttf'),
+    'Lora-RegularItalic':require('./assets/fonts/Lora-RegularItalic.ttf'),
   });
 
   // Hold the splash until the faces are ready, so no frame renders in a fallback font.

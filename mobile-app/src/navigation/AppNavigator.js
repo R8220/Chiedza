@@ -69,7 +69,8 @@ export default function AppNavigator(){
               options={({navigation})=>({header:()=><TopBar title="Create your place" onBack={()=>navigation.goBack()} right={null}/>})}/>
           </>
         ):!user.onboardingComplete?(
-          <Stack.Screen name="Onboarding" component={OnboardingScreen} options={{header:()=><TopBar/>}}/>
+          // Spec 3, Stage 2: the arrival is deliberately bare — no logo, no chrome.
+          <Stack.Screen name="Onboarding" component={OnboardingScreen} options={{headerShown:false}}/>
         ):(
           <>
             <Stack.Screen name="Main" component={MainTabs} options={{headerShown:false}}/>
@@ -87,5 +88,5 @@ export default function AppNavigator(){
 const s=StyleSheet.create({
   splash:{flex:1,alignItems:'center',justifyContent:'center',backgroundColor:colors.cream},
   tabBar:{backgroundColor:colors.white,borderTopWidth:StyleSheet.hairlineWidth,borderTopColor:colors.line,paddingTop:6},
-  tabLabel:{fontFamily:fonts.sansMedium,fontSize:10,letterSpacing:.6,marginTop:3},
+  tabLabel:{fontFamily:fonts.bodyMedium,fontSize:10,letterSpacing:.6,marginTop:3},
 });
