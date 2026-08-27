@@ -50,6 +50,11 @@ router.put('/me/settings',async(req,res)=>{
   const fields=['aiOnlyMode','therapistVisibility','transcriptSharing','recordingConsent','contactConsent','lowBatteryMode','reducedMotion'];
   const update={}; for(const f of fields)if(typeof req.body[f]==='boolean')update[f]=req.body[f];
   if(req.body.communicationPreference)update.communicationPreference=String(req.body.communicationPreference).slice(0,40);
+  // Cultural Relevance Engine inputs. These are asked after arrival rather than during
+  // it, so the first 90 seconds stay 90 seconds (spec 5.1), but they must be reachable.
+  if(typeof req.body.language==='string')update.language=req.body.language.slice(0,20);
+  if(typeof req.body.culture==='string')update.culture=req.body.culture.slice(0,80);
+  if(typeof req.body.faith==='string')update.faith=req.body.faith.slice(0,80);
   await u.update(update); res.json({user:pickUser(u)});
 });
 

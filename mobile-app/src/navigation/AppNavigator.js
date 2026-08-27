@@ -21,6 +21,8 @@ import CommunityScreen from '../screens/CommunityScreen';
 import SessionsScreen from '../screens/SessionsScreen';
 import MessagesScreen from '../screens/MessagesScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import CheckInScreen from '../screens/CheckInScreen';
+import RoomScreen,{ROOMS} from '../screens/RoomScreen';
 
 const Stack=createNativeStackNavigator(),Tabs=createBottomTabNavigator();
 
@@ -28,7 +30,7 @@ const tabIcons={Home:'home',Listener:'message-circle',Rooms:'moon',Journal:'book
 // Home wears the brand masthead; the rest carry their own name.
 const tabHeaders={Listener:['The Listener','Say as much or as little as you have'],Rooms:['The Quiet Arcade','Rooms to enter and softly return from'],Journal:['Journal','Night pages, release and reflection'],More:['More care spaces','Open only what you have capacity for']};
 // Grief Archive and Companion Mode are Phase 2/3 and are not part of this build.
-const stackHeaders={Recovery:'Return to Self',Community:'Carry With Me',Sessions:'Sessions',Messages:'Secure Messages',Settings:'Consent & Control'};
+const stackHeaders={CheckIn:'Check in',Recovery:'Return to Self',Community:'Carry With Me',Sessions:'Sessions',Messages:'Secure Messages',Settings:'Consent & Control'};
 
 function MainTabs(){
   const {user}=useAuth();
@@ -74,8 +76,10 @@ export default function AppNavigator(){
         ):(
           <>
             <Stack.Screen name="Main" component={MainTabs} options={{headerShown:false}}/>
+            <Stack.Screen name="Room" component={RoomScreen}
+              options={({navigation,route})=>({header:()=><TopBar title={ROOMS[route.params?.id]?.name||'Room'} onBack={()=>navigation.goBack()} right={null}/>})}/>
             {Object.entries(stackHeaders).map(([name,label])=>(
-              <Stack.Screen key={name} name={name} component={{Recovery:RecoveryScreen,Community:CommunityScreen,Sessions:SessionsScreen,Messages:MessagesScreen,Settings:SettingsScreen}[name]}
+              <Stack.Screen key={name} name={name} component={{CheckIn:CheckInScreen,Recovery:RecoveryScreen,Community:CommunityScreen,Sessions:SessionsScreen,Messages:MessagesScreen,Settings:SettingsScreen}[name]}
                 options={({navigation})=>({header:()=><TopBar title={label} onBack={()=>navigation.goBack()} right={null}/>})}/>
             ))}
           </>

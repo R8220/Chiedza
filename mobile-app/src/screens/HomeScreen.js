@@ -74,6 +74,11 @@ export default function HomeScreen({navigation}){
 
       <View style={{gap:spacing.md}}>
         <SectionHeader>What do you need right now</SectionHeader>
+        {/* SAFER Stage 1. The check-in is what feeds capacity and the orchestrator. */}
+        <ChoiceCard icon="sunrise" title="To say how I'm arriving"
+          description="A brief check-in — it sets your capacity for today"
+          tint={colors.sepiaText} wash={colors.goldWash}
+          onPress={()=>navigation.navigate('CheckIn')}/>
         <ChoiceCard icon="message-circle" title="Someone to listen"
           description="The AI listener, at whatever length you have in you"
           tint={colors.sepia} wash={colors.creamDeep}
