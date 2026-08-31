@@ -1,0 +1,35 @@
+<section class="page-shell admin-shell">
+  <div class="page-header split-header">
+    <div><span class="eyebrow">Content management</span><h1>Quotes</h1><p>Add, edit, activate or remove the supportive quotes shown on the user dashboard.</p></div>
+  </div>
+  <div class="two-column">
+    <form method="post" action="/admin/quotes" class="card form-stack sticky-card">
+      <div><span class="eyebrow">New quote</span><h2>Add a quote</h2></div>
+      <label>Quote text<textarea name="text" rows="5" maxlength="2000" required placeholder="Enter the supportive message..."></textarea></label>
+      <label>Author<input name="author" maxlength="180" value="Chiedza" placeholder="Chiedza or author name"></label>
+      <label>Category<input name="category" maxlength="100" value="Hope" placeholder="Hope, Healing, Rest..."></label>
+      <label>Display order<input type="number" name="displayOrder" value="100"></label>
+      <label class="check-line"><input type="checkbox" name="active" checked><span>Active and visible to users</span></label>
+      <button class="button" type="submit">Add quote</button>
+    </form>
+
+    <div class="list-stack">
+      <% if (!quotes.length) { %><article class="card empty-state"><span>✦</span><h2>No quotes yet</h2><p>Add the first quote using the form.</p></article><% } %>
+      <% quotes.forEach(q=>{ %>
+        <article class="card quote-admin-card">
+          <div class="section-heading">
+            <div><span class="tag"><%= q.category %></span><span class="status <%= q.active?'good':'' %>"><%= q.active?'Active':'Inactive' %></span></div>
+            <small>Order <%= q.displayOrder %></small>
+          </div>
+          <blockquote>“<%= q.text %>”</blockquote>
+          <p class="quote-author">— <%= q.author || 'Unknown' %></p>
+          <div class="button-row">
+            <a class="button button-sm" href="/admin/quotes/<%= q.id %>/edit">Edit</a>
+            <form method="post" action="/admin/quotes/<%= q.id %>/status"><input type="hidden" name="active" value="<%= q.active?'false':'true' %>"><button class="button button-ghost button-sm" type="submit"><%= q.active?'Deactivate':'Activate' %></button></form>
+            <form method="post" action="/admin/quotes/<%= q.id %>/delete" onsubmit="return confirm('Delete this quote?')"><button class="button button-danger button-sm" type="submit">Delete</button></form>
+          </div>
+        </article>
+      <% }) %>
+    </div>
+  </div>
+</section>

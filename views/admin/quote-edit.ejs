@@ -1,0 +1,10 @@
+<section class="page-shell narrow-shell">
+  <div class="page-header"><span class="eyebrow">Content management</span><h1>Edit quote</h1><p>Update the quote and choose whether it should be visible on user dashboards.</p></div>
+  <form method="post" action="/admin/quotes/<%= quote.id %>/edit" class="card form-stack">
+    <label>Quote text<textarea name="text" rows="6" maxlength="2000" required><%= quote.text %></textarea></label>
+    <div class="form-grid two"><label>Author<input name="author" maxlength="180" value="<%= quote.author %>"></label><label>Category<input name="category" maxlength="100" value="<%= quote.category %>"></label></div>
+    <label>Display order<input type="number" name="displayOrder" value="<%= quote.displayOrder %>"></label>
+    <label class="check-line"><input type="checkbox" name="active" <%= quote.active?'checked':'' %>><span>Active and visible to users</span></label>
+    <div class="button-row"><button class="button" type="submit">Save changes</button><a class="button button-ghost" href="/admin/quotes">Cancel</a></div>
+  </form>
+</section>

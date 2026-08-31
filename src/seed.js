@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import bcrypt from 'bcryptjs';
-import {syncDatabase,User,TherapistProfile,Assignment,Subscription,CheckIn,Milestone,CrisisContact,Lantern,CareSummary} from './models/index.js';
+import {syncDatabase,User,TherapistProfile,Assignment,Subscription,CheckIn,Milestone,CrisisContact,Lantern,CareSummary,Quote,Game} from './models/index.js';
 import {encryptText} from './utils/crypto.js';
 const password='Demo123!';const passwordHash=await bcrypt.hash(password,12);await syncDatabase();
 async function upsertUser(email,data){const[user]=await User.findOrCreate({where:{email},defaults:{...data,email,passwordHash}});await user.update({...data,passwordHash});await Subscription.findOrCreate({where:{userId:user.id},defaults:{plan:'free',status:'active'}});return user;}
@@ -13,5 +13,15 @@ if(await CheckIn.count({where:{userId:demoUser.id}})===0)await CheckIn.bulkCreat
 if(await Milestone.count({where:{userId:demoUser.id}})===0)await Milestone.bulkCreate([{userId:demoUser.id,title:'Asked for support',note:'A quiet milestone, not a score.',stoneType:'healing',happenedAt:new Date(Date.now()-6*86400000)},{userId:demoUser.id,title:'Rested without apologising',note:'The Long Afternoon helped me stop pushing.',stoneType:'rest',happenedAt:new Date(Date.now()-3*86400000)}]);
 if(await CareSummary.count({where:{userId:demoUser.id}})===0)await CareSummary.create({userId:demoUser.id,summary:`Emotional timeline: Recent check-ins alternate between manageable days and work-related overwhelm.\nKey themes: burnout, anxiety, sleep.\nDistress triggers: Work pressure appears in recent self-report.\nCoping signals: Rest and reduced stimulation were described as useful.\nRisk indicators: No high-risk language in this demo summary.\nBehavioural patterns: More longitudinal data required.\nReview note: AI-generated summary - clinician review required.`});
 if(await Lantern.count()===0)await Lantern.bulkCreate([{userId:demoUser.id,encryptedContent:encryptText('I rested today without explaining why. It felt small, but it mattered.'),theme:'burnout',pod:'Zimbabwe',moderationStatus:'approved',publishedAt:new Date(Date.now()-2*86400000)},{userId:demoUser.id,encryptedContent:encryptText('Some grief does not need advice. Sometimes I only need a place to put it down.'),theme:'grief',pod:'global',moderationStatus:'approved',publishedAt:new Date(Date.now()-86400000)}]);
+if(await Quote.count()===0)await Quote.bulkCreate([{text:'You do not have to solve everything today. A small, safe next step is enough.',author:'Chiedza',category:'Gentleness',active:true,displayOrder:10},{text:'Rest is not a failure to move forward. Sometimes it is how we gather enough strength to continue.',author:'Chiedza',category:'Rest',active:true,displayOrder:20},{text:'Healing can be quiet. Progress still counts when nobody else can see it.',author:'Chiedza',category:'Healing',active:true,displayOrder:30},{text:'You are allowed to ask for support before things become unbearable.',author:'Chiedza',category:'Support',active:true,displayOrder:40}]);
 if(await CrisisContact.count()===0)await CrisisContact.bulkCreate([{region:'Demo / Configure before production',countryCode:'',name:'Local emergency service - replace with verified regional number',phone:'CONFIGURE_IN_ADMIN',website:'',priority:1,active:true,verifiedAt:null},{region:'Demo / Configure before production',countryCode:'',name:'Trusted human support contact - configure operational pathway',phone:'CONFIGURE_IN_ADMIN',website:'',priority:2,active:true,verifiedAt:null}]);
+
+const starterGames=[
+{title:'Calm Memory Match',slug:'calm-memory-match',description:'Match pairs of gentle symbols at your own pace.',room:'calm',gameType:'memory',difficulty:'gentle',displayOrder:10},
+{title:'Present Moment Word Search',slug:'present-moment-word-search',description:'Find a small set of grounding words with no timer.',room:'ground',gameType:'wordsearch',difficulty:'easy',displayOrder:20},
+{title:'Quiet Pattern Match',slug:'quiet-pattern-match',description:'Notice simple visual rhythms and choose what comes next.',room:'rest',gameType:'pattern',difficulty:'gentle',displayOrder:30},
+{title:'Breathing Tap',slug:'breathing-tap',description:'Use a slow tap as a gentle focus point for your breathing.',room:'return',gameType:'breathing',difficulty:'gentle',displayOrder:40}
+];
+for(const game of starterGames){const[g]=await Game.findOrCreate({where:{slug:game.slug},defaults:{...game,active:true}});await g.update({...game,active:true});}
+
 console.log('Seed complete.');console.log('Demo accounts (all password Demo123!):');console.log('user@chiedza.local');console.log('therapist@chiedza.local');console.log('reviewer@chiedza.local');console.log('admin@chiedza.local');process.exit(0);

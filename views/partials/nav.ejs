@@ -5,7 +5,8 @@
     <% } else if (currentUser.role === 'user') { %><a href="/app">Home</a><a href="/listener">AI Listener</a><a href="/rooms">Quiet Arcade</a><a href="/mindfulness">Mindfulness</a><a href="/app/recovery">Recovery</a><details class="nav-more"><summary>More</summary><div><a href="/community">Carry With Me</a><a href="/app/sessions">Sessions</a><a href="/app/messages">Messages</a><a href="/app/settings">Consent & Settings</a></div></details>
     <% } else if (currentUser.role === 'therapist') { %><a href="/therapist">Therapist Corner</a>
     <% } else if (currentUser.role === 'reviewer') { %><a href="/reviewer">Care Review Queue</a>
-    <% } else if (currentUser.role === 'admin') { %><a href="/admin">Operations</a><a href="/admin/users">People</a><a href="/admin/crisis-contacts">Crisis Directory</a><a href="/admin/audit">Audit</a><a href="/reviewer">Review Queue</a><% } %>
+    <% } else if (currentUser.role === 'admin') { %><a href="/admin">Operations</a><a href="/admin/users">People</a><a href="/admin/quotes">Quotes</a>
+  <a href="/admin/games">Games</a><a href="/admin/crisis-contacts">Crisis Directory</a><a href="/admin/audit">Audit</a><a href="/reviewer">Review Queue</a><% } %>
     <% if (currentUser) { %><form method="post" action="/logout" class="inline-form"><button class="link-button" type="submit">Sign out</button></form><% } %>
   </nav>
 </header>

@@ -9,6 +9,27 @@
     <a class="button button-ghost" href="/rooms">Choose a quiet room</a>
   </div>
 
+  <% if (quotes && quotes.length) { %>
+  <section class="card quote-card quote-carousel" data-quote-carousel data-interval="12000" aria-label="Supportive quotes">
+    <div class="quote-stage" aria-live="polite">
+      <% quotes.forEach((quote, index) => { %>
+        <article class="quote-slide <%= index === 0 ? 'is-active' : '' %>" data-quote-slide <%= index === 0 ? '' : 'hidden' %>>
+          <span class="eyebrow"><%= quote.category || 'A thought for today' %></span>
+          <blockquote>“<%= quote.text %>”</blockquote>
+          <p class="quote-author">— <%= quote.author || 'Unknown' %></p>
+        </article>
+      <% }) %>
+    </div>
+    <% if (quotes.length > 1) { %>
+      <div class="quote-carousel-controls">
+        <button class="quote-nav" type="button" data-quote-prev aria-label="Show previous quote">← Previous</button>
+        <span class="quote-counter" aria-hidden="true"><span data-quote-current>1</span> / <%= quotes.length %></span>
+        <button class="quote-nav" type="button" data-quote-next aria-label="Show next quote">Next →</button>
+      </div>
+    <% } %>
+  </section>
+  <% } %>
+
   <div class="dashboard-grid">
     <section class="card span-2">
       <div class="section-heading"><div><span class="eyebrow">A brief check-in</span><h2>How much do you have today?</h2></div><span class="privacy-chip">No streaks</span></div>
@@ -44,3 +65,70 @@
     <aside class="card subscription-card"><span class="eyebrow">Access</span><h2><%= subscription?.plan==='plus'?'Chiedza Plus':'Core care' %></h2><p>The system keeps essential support visible without turning care into a reward loop.</p><a href="/pricing" class="text-link">View access model →</a></aside>
   </div>
 </section>
+<script>
+(() => {
+  const carousel = document.querySelector('[data-quote-carousel]');
+  if (!carousel) return;
+
+  const slides = Array.from(carousel.querySelectorAll('[data-quote-slide]'));
+  if (slides.length < 2) return;
+
+  const prevButton = carousel.querySelector('[data-quote-prev]');
+  const nextButton = carousel.querySelector('[data-quote-next]');
+  const currentLabel = carousel.querySelector('[data-quote-current]');
+  const intervalMs = Number(carousel.dataset.interval) || 12000;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let currentIndex = 0;
+  let timer = null;
+  let resumeTimer = null;
+
+  const showQuote = (index) => {
+    currentIndex = (index + slides.length) % slides.length;
+    slides.forEach((slide, i) => {
+      const active = i === currentIndex;
+      slide.hidden = !active;
+      slide.classList.toggle('is-active', active);
+    });
+    if (currentLabel) currentLabel.textContent = String(currentIndex + 1);
+  };
+
+  const stopAutoRotate = () => {
+    if (timer) window.clearInterval(timer);
+    timer = null;
+  };
+
+  const startAutoRotate = () => {
+    stopAutoRotate();
+    if (!reduceMotion && document.visibilityState === 'visible') {
+      timer = window.setInterval(() => showQuote(currentIndex + 1), intervalMs);
+    }
+  };
+
+  const manualMove = (direction) => {
+    showQuote(currentIndex + direction);
+    stopAutoRotate();
+    if (resumeTimer) window.clearTimeout(resumeTimer);
+    if (!reduceMotion) {
+      resumeTimer = window.setTimeout(startAutoRotate, intervalMs);
+    }
+  };
+
+  prevButton?.addEventListener('click', () => manualMove(-1));
+  nextButton?.addEventListener('click', () => manualMove(1));
+  carousel.addEventListener('mouseenter', stopAutoRotate);
+  carousel.addEventListener('mouseleave', startAutoRotate);
+  carousel.addEventListener('focusin', stopAutoRotate);
+  carousel.addEventListener('focusout', () => {
+    window.setTimeout(() => {
+      if (!carousel.contains(document.activeElement)) startAutoRotate();
+    }, 0);
+  });
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') startAutoRotate();
+    else stopAutoRotate();
+  });
+
+  startAutoRotate();
+})();
+</script>
+
